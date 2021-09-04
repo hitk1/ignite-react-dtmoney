@@ -1,17 +1,10 @@
-import { useEffect } from 'react'
-import { api } from '../../services/api'
+import { useContext } from 'react'
+import { TransactionsContext } from '../../TransactionContext'
 import { Container } from './styles'
 
+
 const TransactionsTable: React.FC = () => {
-
-    useEffect(() => {
-
-        api.get('/transactions')
-            .then(response => {
-                const { data } = response
-
-            })
-    }, [])
+    const { transactions } = useContext(TransactionsContext)
 
     return (
         <Container>
@@ -25,12 +18,24 @@ const TransactionsTable: React.FC = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Desenvolivmento de app mobile</td>
-                        <td className="deposit">R$8.000</td>
-                        <td>Desenvolvimento</td>
-                        <td>30/08/2021</td>
-                    </tr>
+                    {transactions.map(item => {
+                        console.log(item)
+                        return (
+                            <tr key={item.id}>
+                                <td>{item.title}</td>
+                                <td className={item.transactionType}>
+                                    {new Intl.NumberFormat('pt-BR',
+                                        {
+                                            style: 'currency',
+                                            currency: 'BRL'
+                                        }).format(item.amount)
+                                    }
+                                </td>
+                                <td>{item.category}</td>
+                                <td>{new Intl.DateTimeFormat('pt-BR').format(new Date(item.createdAt))}</td>
+                            </tr>
+                        )
+                    })}
                 </tbody>
             </table>
         </Container>
