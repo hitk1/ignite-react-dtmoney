@@ -3,8 +3,7 @@ import Modal from 'react-modal'
 import closeImg from '../../assets/close.svg'
 import incomeImg from '../../assets/income.svg'
 import outcomeImg from '../../assets/outcome.svg'
-import { api } from '../../services/api'
-import { TransactionsContext } from '../../TransactionContext'
+import { useTransactions } from '../../hooks/useTransactions'
 import { Container, TransactionTypeContainer, TypeTransactionButton } from './styles'
 
 interface IProps {
@@ -13,7 +12,7 @@ interface IProps {
 }
 
 const NewTransactionModal: React.FC<IProps> = ({ isOpen, onRequestClose }) => {
-    const { createTransaction } = useContext(TransactionsContext)
+    const { createTransaction } = useTransactions()
 
     const [transactionType, setTransactionType] = useState('')
     const [title, setTitle] = useState('')

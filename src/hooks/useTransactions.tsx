@@ -1,5 +1,5 @@
-import { createContext, useEffect, useState } from 'react'
-import { api } from './services/api'
+import { createContext, useContext, useEffect, useState } from 'react'
+import { api } from '../services/api'
 
 interface ITransaction {
     id: number
@@ -52,4 +52,10 @@ const TransactionsProvider: React.FC = ({ children }) => {
     )
 }
 
-export { TransactionsContext, TransactionsProvider }
+const useTransactions = () => {
+    const context = useContext(TransactionsContext)
+
+    return context
+}
+
+export { useTransactions, TransactionsProvider }
